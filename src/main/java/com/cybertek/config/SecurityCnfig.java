@@ -20,7 +20,7 @@ public class SecurityCnfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
        http.authorizeRequests()
-               .antMatchers("/user/**").hasAnyAuthority("Admin")
+               .antMatchers("/user/**").hasAuthority("Admin")
                .antMatchers("/project/**").hasAuthority("Manager")
                .antMatchers("/task/employee/**").hasAuthority("Employee")
                .antMatchers("/task/**").hasAuthority("Manager")
@@ -29,9 +29,12 @@ public class SecurityCnfig extends WebSecurityConfigurerAdapter {
                .successHandler(authSuccessHandler)
                .failureUrl("/login?error=true").permitAll()
                .and()
-               .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-               .logoutSuccessUrl("/login?logout=true")
-               .and().rememberMe().tokenValiditySeconds(120)
+               .logout()
+               .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+               .logoutSuccessUrl("/login")
+               .and()
+               .rememberMe().
+               tokenValiditySeconds(120)
        .key("kariDomi").userDetailsService(securityService);
     }
 }

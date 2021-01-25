@@ -65,6 +65,8 @@ userRepo.save(obj);
         User user = userRepo.findByUserName(dto.getUserName());
         //Map update user DTO to eentity object
         User convertedUser = mapperUtil.convert(dto,new User());
+        convertedUser.setPassWord(passwordEncoder.encode(convertedUser.getPassWord()));
+        convertedUser.setEnabled(true);
         //set id to the converted obj
         convertedUser.setId(user.getId());
         //save updated user

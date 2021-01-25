@@ -11,6 +11,7 @@ import com.cybertek.repo.TaskRepo;
 import com.cybertek.repo.UserRepo;
 import com.cybertek.service.TaskService;
 import lombok.Setter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -106,7 +107,8 @@ if(foundTask.isPresent()){
 
     @Override
     public List<TaskDTO> listAllTasksByStatusIsNot(Status status) {
-        User user = userRepo.findByUserName("employee.com");
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepo.findByUserName(userName);
         List<Task>list = taskRepo.findAllByTaskStatusIsNotAndAssignedEmployee(status,user);
 
         return list.stream().map(taskMapper::convertToDTO).collect(Collectors.toList());
@@ -114,7 +116,8 @@ if(foundTask.isPresent()){
 
     @Override
     public List<TaskDTO> listAllTasksByProjectManager() {
-        User user=userRepo.findByUserName("admin.com");
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user=userRepo.findByUserName(userName);
         List<Task>tasks = taskRepo.findAllByProjectAssignedManager(user);
 
         return tasks.stream().map(taskMapper::convertToDTO).collect(Collectors.toList());
@@ -134,7 +137,8 @@ if(foundTask.isPresent()){
 
     @Override
     public List<TaskDTO> listAllTasksByStatus(Status status) {
-        User user = userRepo.findByUserName("employee.com");
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepo.findByUserName(userName);
 
         List<Task>tasks=taskRepo.findAllByTaskStatusAndAssignedEmployee(status,user);
 

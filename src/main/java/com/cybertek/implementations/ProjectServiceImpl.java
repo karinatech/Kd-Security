@@ -12,6 +12,7 @@ import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -86,7 +87,8 @@ taskService.deleteByProject(projectMapper.convertToDtoProjectEntity(project));
 
     @Override
     public List<ProjectDTO> listAllProjectDetails() {
-        UserDTO currentUserDto= userService.findByUserName("admin.com");
+        String userName= SecurityContextHolder.getContext().getAuthentication().getName();
+        UserDTO currentUserDto= userService.findByUserName(userName);
         User user=userMapper.convertToEntity(currentUserDto);
         List<Project>list = projectRepo.findByAssignedManager(user);
 
@@ -102,4 +104,11 @@ taskService.deleteByProject(projectMapper.convertToDtoProjectEntity(project));
         return projects.stream().map(projectMapper::convertToDtoProjectEntity).collect(Collectors.toList());
 
     }
+
+    @Override
+    public List<ProjectDTO> liistAllNonCompletdProjcts() {
+
+        return projectRepo.findAllByProjectStatusIsNot(Status.COMPLETE).stream().map(project -> projectMapper.convertToDtoProjectEntity(project)).collect(Collectors.toList());
+    }
+
 }
