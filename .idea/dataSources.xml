@@ -5,7 +5,13 @@
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/kari</jdbc-url>
+      <jdbc-url>jdbc:postgresql://kari.cys0bl5boldl.us-east-2.rds.amazonaws.com/kari</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="postgres@localhost" uuid="ea5d8f9e-0a84-4485-a4ed-a1ad8708764c">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
     </data-source>
   </component>
 </project>

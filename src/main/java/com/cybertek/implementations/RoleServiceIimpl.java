@@ -29,7 +29,7 @@ public class RoleServiceIimpl implements RoleService {
     }
 
     @Override
-    public RoleDTO findByd(long id) {
+    public RoleDTO findByd(Long id) {
         Role role = roleeRepo.findById(id).get();
         return roleMapper.convertToDto(role);
     }
